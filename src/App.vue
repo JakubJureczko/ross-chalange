@@ -3,26 +3,63 @@
     <div class="articles">
       <Search
         numberLimit="13"
+        which="articles"
+        btn="Sprawdź kod"
         @findArticle="findArticle"
-        @hideResultArticles="hideResultArticles"
+        @hideArticles="hideArticles"
       >
-        <template v-if="!isResultHidden" v-slot:articlesSlot>
-          <div v-if="articlesResult.length === 0">
-            <p>Artykuł o kodzie {{ articlesSearchValue }} nie istnieje</p>
-          </div>
-          <div v-else>
-            <p>Nazwa: {{ articlesResult[0].name }}</p>
-            <p>Kod artykułu: {{ articlesResult[0].code }}</p>
-            <p>Cena: {{ articlesResult[0].price }}</p>
-            <p>Stok: {{ articlesResult[0].stock }}</p>
-          </div>
-        </template>
       </Search>
+      <div
+        :class="[
+          !isResultHidden ? 'articles__result' : 'articles__result hidden',
+        ]"
+        v-if="!isResultHidden"
+      >
+        <div v-if="articlesResult.length === 0">
+          <p>Artykuł o kodzie {{ articlesSearchValue }} nie istnieje</p>
+        </div>
+        <div v-else>
+          <p>Nazwa: {{ articlesResult[0].name }}</p>
+          <p>Kod artykułu: {{ articlesResult[0].code }}</p>
+          <p>Cena: {{ articlesResult[0].price }}</p>
+          <p>Stok: {{ articlesResult[0].stock }}</p>
+        </div>
+      </div>
     </div>
     <div class="boxes">
-      <Search numberLimit="6">
+      <Search
+        numberLimit="6"
+        btn="Sprawdź i dodaj"
+        which="boxes"
+        @findBoxes="findBoxes"
+        @hideBoxes="hideBoxes"
+      >
         <template v-slot:boxesSlot> <p>boxes</p> </template>
       </Search>
+      <div
+        :class="[!isResultHidden ? 'boxes__result' : 'boxes__result hidden']"
+        v-if="!isResultHiddenBoxes"
+      >
+        <div v-if="boxesResult.length === 0">
+          <p>
+            Pojemnik o kodzie {{ boxesSearchValue }} nie istnieje lub jest
+            nieaktywny
+          </p>
+        </div>
+      </div>
+      <div class="boxes__list">
+        <div v-for="box in boxesUserArray" :key="box.BoxCode">
+          <div>
+            <p>{{ box.BoxCode }}</p>
+            <button @click="deleteBox(box)">delete</button>
+          </div>
+
+          <!-- <p>Kod pojemnika: {{ boxesResult[0].BoxCode }}</p>
+          <p>Szerokość: {{ boxesResult[0].Width }}</p>
+          <p>Wysokość: {{ boxesResult[0].Height }}</p>
+          <p>Głębokość: {{ boxesResult[0].Depth }}</p> -->
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -43,22 +80,46 @@ export default {
       articlesResult: [],
       articlesSearchValue: null,
       boxesArray: boxes.boxes,
+      boxesResult: [],
+      boxesSearchValue: null,
+      boxesUserArray: [],
 
       isResultHidden: true,
+      isResultHiddenBoxes: true,
     };
   },
   methods: {
-    findArticle(value) {
+    findArticle(...value) {
       this.articlesResult = this.articlesArray.filter(
         (e) => e.code === parseInt(value)
       );
-      this.articlesSearchValue = value;
+      this.articlesSearchValue = value[0];
       this.isResultHidden = false;
     },
-    hideResultArticles() {
-      this.isResultHidden = true;
 
-      console.log(this.isResultHidden);
+    findBoxes(value) {
+      this.boxesResult = this.boxesArray.filter((e) => e.BoxCode === value);
+
+      this.boxesSearchValue = value;
+      this.isResultHiddenBoxes = false;
+
+      if (
+        this.boxesResult.length !== 0 &&
+        !this.boxesUserArray.includes(this.boxesResult[0])
+      ) {
+        this.boxesUserArray.push(this.boxesResult[0]);
+      }
+    },
+    deleteBox(box) {
+      this.boxesUserArray = this.boxesUserArray.filter((item) => {
+        return box !== item;
+      });
+    },
+    hideArticles() {
+      this.isResultHidden = true;
+    },
+    hideBoxes() {
+      this.isResultHiddenBoxes = true;
     },
   },
 };
