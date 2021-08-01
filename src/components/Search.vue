@@ -17,7 +17,6 @@ export default {
   data() {
     return {
       searchValue: "",
-      isResultHidden: true,
     };
   },
   methods: {
@@ -27,12 +26,11 @@ export default {
       if (charCode < 48 || charCode > 57) {
         e.preventDefault();
       } else {
-        return true && this.$emit("hideArticles") && this.$emit("hideBoxes");
+        return true && this.$emit("hideResult", this.which);
       }
     },
     handleClick() {
-      this.$emit("findArticle", this.searchValue, this.which);
-      this.$emit("findBoxes", this.searchValue);
+      this.$emit("findResult", { value: this.searchValue, which: this.which });
     },
   },
 };

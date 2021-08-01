@@ -5,8 +5,8 @@
         numberLimit="13"
         which="articles"
         btn="Sprawdź kod"
-        @findArticle="findArticle"
-        @hideArticles="hideArticles"
+        @findResult="findResult"
+        @hideResult="hideResult"
       >
       </Search>
       <div
@@ -31,8 +31,8 @@
         numberLimit="6"
         btn="Sprawdź i dodaj"
         which="boxes"
-        @findBoxes="findBoxes"
-        @hideBoxes="hideBoxes"
+        @findResult="findResult"
+        @hideResult="hideResult"
       >
         <template v-slot:boxesSlot> <p>boxes</p> </template>
       </Search>
@@ -89,37 +89,36 @@ export default {
     };
   },
   methods: {
-    findArticle(...value) {
-      this.articlesResult = this.articlesArray.filter(
-        (e) => e.code === parseInt(value)
-      );
-      this.articlesSearchValue = value[0];
-      this.isResultHidden = false;
-    },
-
-    findBoxes(value) {
-      this.boxesResult = this.boxesArray.filter((e) => e.BoxCode === value);
-
-      this.boxesSearchValue = value;
-      this.isResultHiddenBoxes = false;
-
-      if (
-        this.boxesResult.length !== 0 &&
-        !this.boxesUserArray.includes(this.boxesResult[0])
-      ) {
-        this.boxesUserArray.push(this.boxesResult[0]);
+    findResult(value) {
+      if (value.which === "articles") {
+        this.articlesResult = this.articlesArray.filter(
+          (e) => e.code === parseInt(value.value)
+        );
+        this.articlesSearchValue = value.value;
+        this.isResultHidden = false;
+      } else if (value.which === "boxes") {
+        this.boxesResult = this.boxesArray.filter(
+          (e) => e.BoxCode === value.value
+        );
+        this.boxesSearchValue = value.value;
+        this.isResultHiddenBoxes = false;
+        if (
+          this.boxesResult.length !== 0 &&
+          !this.boxesUserArray.includes(this.boxesResult[0])
+        ) {
+          this.boxesUserArray.push(this.boxesResult[0]);
+        }
       }
+    },
+    hideResult(value) {
+      if (value === "articles") {
+        this.isResultHidden = true;
+      } else if (value === "boxes") this.isResultHiddenBoxes = true;
     },
     deleteBox(box) {
       this.boxesUserArray = this.boxesUserArray.filter((item) => {
         return box !== item;
       });
-    },
-    hideArticles() {
-      this.isResultHidden = true;
-    },
-    hideBoxes() {
-      this.isResultHiddenBoxes = true;
     },
   },
 };
