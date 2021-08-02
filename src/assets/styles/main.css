@@ -89,10 +89,6 @@ p {
   margin-bottom: 3rem;
 }
 
-.boxes__list {
-  /* margin-top: 1.5rem; */
-}
-
 .boxes__card {
   display: flex;
   border: 2px solid #cb0e3718;
@@ -122,5 +118,35 @@ p {
 
 .btn-delete:hover {
   background-color: #cb0e3736;
+  transition: 0.4s;
+}
+
+.search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input {
+  border: 2px solid var(--colorRoss);
+  padding: 5px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.btn {
+  outline: none;
+  width: 10rem;
+  cursor: pointer;
+  border: 2px solid var(--colorRoss);
+  background-color: transparent;
+  padding: 5px 15px;
+  border-radius: 5px;
+  margin-left: 2rem;
+  transition: 0.4s ease-out;
+}
+
+.btn:hover {
+  border-color: black;
   transition: 0.4s;
 }

@@ -1,13 +1,15 @@
 <template>
-  <div>
+  <div class="search">
     <input
+      placeholder="wpisz kod"
+      class="input"
       type="text"
       v-model="searchValue"
       v-on:keypress="isNumber($event)"
       @keyup.enter="handleClick"
       :maxlength="numberLimit"
     />
-    <button @click="handleClick">{{ btn }}</button>
+    <button class="btn" @click="handleClick">{{ btn }}</button>
   </div>
 </template>
 
