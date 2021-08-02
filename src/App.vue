@@ -1,6 +1,10 @@
 <template>
   <div id="app">
+    <div class="logo">
+      <div class="logo__circle"></div>
+    </div>
     <div class="articles">
+      <h2>Artykuły</h2>
       <Search
         numberLimit="13"
         which="articles"
@@ -11,22 +15,25 @@
       </Search>
       <div
         :class="[
-          !isResultHidden ? 'articles__result' : 'articles__result hidden',
+          !isResultHidden ? 'articles__result' : 'articles__result--hidden',
         ]"
         v-if="!isResultHidden"
       >
         <div v-if="articlesResult.length === 0">
-          <p>Artykuł o kodzie {{ articlesSearchValue }} nie istnieje</p>
+          <p>
+            Artykuł o kodzie <span>{{ articlesSearchValue }}</span> nie istnieje
+          </p>
         </div>
         <div v-else>
-          <p>Nazwa: {{ articlesResult[0].name }}</p>
-          <p>Kod artykułu: {{ articlesResult[0].code }}</p>
-          <p>Cena: {{ articlesResult[0].price }}</p>
-          <p>Stok: {{ articlesResult[0].stock }}</p>
+          <p><span>Nazwa:</span> {{ articlesResult[0].name }}</p>
+          <p><span>Kod artykułu:</span> {{ articlesResult[0].code }}</p>
+          <p><span>Cena:</span> {{ articlesResult[0].price }}</p>
+          <p><span>Stok:</span> {{ articlesResult[0].stock }}</p>
         </div>
       </div>
     </div>
     <div class="boxes">
+      <h2>Pojemniki</h2>
       <Search
         numberLimit="6"
         btn="Sprawdź i dodaj"
@@ -37,27 +44,28 @@
         <template v-slot:boxesSlot> <p>boxes</p> </template>
       </Search>
       <div
-        :class="[!isResultHidden ? 'boxes__result' : 'boxes__result hidden']"
-        v-if="!isResultHiddenBoxes"
+        :class="[
+          !isResultHiddenBoxes ? 'boxes__result' : 'boxes__result--hidden',
+        ]"
       >
         <div v-if="boxesResult.length === 0">
           <p>
-            Pojemnik o kodzie {{ boxesSearchValue }} nie istnieje lub jest
-            nieaktywny
+            Pojemnik o kodzie <span>{{ boxesSearchValue }}</span> nie istnieje
+            lub jest nieaktywny
           </p>
         </div>
       </div>
       <div class="boxes__list">
         <div v-for="box in boxesUserArray" :key="box.BoxCode">
-          <div>
-            <p>{{ box.BoxCode }}</p>
-            <button @click="deleteBox(box)">delete</button>
+          <div class="boxes__card">
+            <div class="card__inside">
+              <p><span>Kod pojemnika:</span> {{ box.BoxCode }}</p>
+              <p><span>Szerokość: </span>{{ box.Width }}</p>
+              <p><span>Wysokość: </span>{{ box.Height }}</p>
+              <p><span>Głębokość:</span> {{ box.Depth }}</p>
+            </div>
+            <button class="btn-delete" @click="deleteBox(box)">usuń</button>
           </div>
-
-          <!-- <p>Kod pojemnika: {{ boxesResult[0].BoxCode }}</p>
-          <p>Szerokość: {{ boxesResult[0].Width }}</p>
-          <p>Wysokość: {{ boxesResult[0].Height }}</p>
-          <p>Głębokość: {{ boxesResult[0].Depth }}</p> -->
         </div>
       </div>
     </div>

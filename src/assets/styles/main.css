@@ -1,12 +1,126 @@
+:root {
+  --colorRoss: #cb0e38;
+  --colorBack: #faf5f0;
+}
+
+body {
+  margin: 0;
+  background-color: #faf5f0;
+}
+h2 {
+  margin: 0;
+}
+
+p {
+  margin: 0.5rem;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin: 0rem 15%;
 }
 
-.articles {
+.logo {
+  display: flex;
+  padding: 2rem 0;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.logo__circle {
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  background-color: var(--colorRoss);
+}
+
+.articles,
+.boxes {
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
   margin-bottom: 5rem;
+  width: 50%;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  border-radius: 5px;
+  background-color: white;
+  min-height: 15rem;
+}
+.articles h2,
+.boxes h2 {
+  margin-bottom: 2rem;
+}
+.articles__result span,
+.boxes__result span,
+.card__inside span {
+  color: var(--colorRoss);
+  font-weight: 700;
+}
+@media screen and (max-width: 992px) {
+  .articles,
+  .boxes {
+    width: 100%;
+  }
+}
+
+.articles__result,
+.boxes__result {
+  text-align: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+.articles__result--hidden,
+.boxes__result--hidden {
+  text-align: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.5rem;
+  visibility: hidden;
+}
+
+.boxes {
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+}
+
+.boxes__list {
+  /* margin-top: 1.5rem; */
+}
+
+.boxes__card {
+  display: flex;
+  border: 2px solid #cb0e3718;
+  border-radius: 5px;
+  margin-top: 1.5rem;
+  justify-content: space-around;
+}
+.card__inside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0.5rem;
+}
+
+.btn-delete {
+  outline: none;
+  border: none;
+  height: 2rem;
+  background-color: #cb0e3718;
+  transition: 0.4s ease-out;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  /* margin-top: -2px; */
+  cursor: pointer;
+}
+
+.btn-delete:hover {
+  background-color: #cb0e3736;
+  transition: 0.4s;
 }
